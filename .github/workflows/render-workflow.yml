@@ -1,0 +1,29 @@
+name: Deploy to Render
+
+on:
+  push:
+    branches:
+      - main # Change to your branch if needed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛠 Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: ⚡ Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18 # Change if needed
+
+      - name: 📦 Install Dependencies
+        run: npm install
+
+      - name: 🔎 Run Tests (Optional)
+        run: npm test
+
+      - name: 🚀 Deploy to Render
+        run: |
+          curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
